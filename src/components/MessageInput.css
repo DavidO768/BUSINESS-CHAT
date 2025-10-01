@@ -1,0 +1,114 @@
+.message-input-container {
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+:global(.dark) .message-input-container {
+  border-top-color: #374151;
+  background: #111827;
+}
+
+.reply-preview,
+.file-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: rgba(16, 185, 129, 0.1);
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.875rem;
+  color: #047857;
+}
+
+:global(.dark) .reply-preview,
+:global(.dark) .file-preview {
+  border-bottom-color: #374151;
+  color: #10b981;
+}
+
+.reply-preview button,
+.file-preview button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.reply-preview button:hover,
+.file-preview button:hover {
+  background: rgba(107, 114, 128, 0.1);
+}
+
+.message-input {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+:global(.dark) .message-input {
+  background: rgba(17, 24, 39, 0.8);
+}
+
+.attach-button,
+.send-button {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #047857;
+  transition: all 0.2s;
+}
+
+:global(.dark) .attach-button,
+:global(.dark) .send-button {
+  color: #10b981;
+}
+
+.attach-button:hover,
+.send-button:hover {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.send-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.send-button:not(:disabled):hover {
+  background: #047857;
+  color: white;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 24px;
+  font-size: 1rem;
+  background: white;
+  transition: all 0.3s;
+}
+
+:global(.dark) .message-input input {
+  background: #1f2937;
+  border-color: #374151;
+  color: #f3f4f6;
+}
+
+.message-input input:focus {
+  outline: none;
+  border-color: #047857;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
