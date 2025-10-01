@@ -1,8 +1,7 @@
-import { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import { useChat } from '../context/ChatContext'
-import { useTheme } from '../context/ThemeContext'
 import ChatHeader from '../components/ChatHeader'
 import ChatSidebar from '../components/ChatSidebar'
 import MessageList from '../components/MessageList'
@@ -13,7 +12,6 @@ import './Chat.css'
 const Chat = () => {
   const { user } = useAuth()
   const { messages, typingUsers, isChatMuted } = useChat()
-  const { isDark } = useTheme()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
   const [replyTo, setReplyTo] = useState(null)
