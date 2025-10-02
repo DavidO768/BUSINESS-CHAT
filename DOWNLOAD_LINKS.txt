@@ -1,0 +1,91 @@
+===============================================
+GABSTEP BUSINESS CHAT - DOWNLOAD FILES
+===============================================
+
+📦 SOURCE CODE (For VS Code Development)
+File: gabstep-business-chat-source.zip
+Size: 245 KB
+Path: /project/workspace/gabstep-business-chat-source.zip
+
+📦 DEPLOYMENT PACKAGE (For cPanel)
+File: gabstep-business-chat-deploy.zip
+Size: 165 KB
+Path: /project/workspace/gabstep-business-chat/gabstep-business-chat-deploy.zip
+
+📦 GIT BUNDLE (With Full History)
+File: gabstep-business-chat.bundle
+Size: 240 KB
+Path: /project/workspace/gabstep-business-chat.bundle
+
+===============================================
+HOW TO FIND & DOWNLOAD IN WEB INTERFACE:
+===============================================
+
+LOOK FOR:
+1. A "Files" or "Explorer" or "File Browser" panel
+2. Usually on the LEFT SIDE or TOP of the interface
+3. May have a folder icon 📁
+
+THEN:
+1. Navigate to: /project/workspace/
+2. Look for: gabstep-business-chat-source.zip
+3. Click on the file name
+4. Look for one of these:
+   - ⬇️ Download icon/button
+   - 📥 Download option in menu
+   - Right-click → Download
+   - Three dots menu ⋮ → Download
+   - File actions menu → Download
+
+COMMON LOCATIONS OF DOWNLOAD BUTTON:
+- Top right of file viewer
+- Bottom of file preview
+- Right-click context menu
+- Toolbar above file list
+- Three-dot menu next to filename
+
+===============================================
+IF YOU CAN'T FIND DOWNLOAD:
+===============================================
+
+ALTERNATIVE 1: Try these URLs in your browser
+(Replace "your-workspace-url" with your actual URL)
+
+https://your-workspace-url/files/project/workspace/gabstep-business-chat-source.zip
+
+ALTERNATIVE 2: Check browser downloads folder
+- The file may have already downloaded automatically
+- Check: ~/Downloads/ or %USERPROFILE%\Downloads
+
+ALTERNATIVE 3: Contact support
+- Factory.ai support can help with file downloads
+- Or check Factory.ai documentation
+
+===============================================
+AFTER DOWNLOADING:
+===============================================
+
+1. Extract the ZIP file
+2. Open folder in VS Code
+3. Run: npm install
+4. Configure .env file
+5. Run: npm run dev
+
+===============================================
+ALL DOCUMENTATION INCLUDED:
+===============================================
+
+✅ VSCODE_SETUP.md - Complete VS Code guide
+✅ README.md - Project documentation
+✅ SUPABASE_SETUP.md - Database setup
+✅ CPANEL_DEPLOYMENT.md - Deployment guide
+✅ DOWNLOAD_INSTRUCTIONS.md - Detailed help
+
+===============================================
+SUPABASE CREDENTIALS (Already Configured):
+===============================================
+
+URL: https://fjhsecydybodlaoxiurk.supabase.co
+(Add your anon key to .env file after download)
+
+===============================================
