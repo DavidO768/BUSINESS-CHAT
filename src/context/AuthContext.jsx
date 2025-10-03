@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const signUp = async (email, password, username, profilePicture, isAdmin = false, adminPasscode = '') => {
+  const signUp = async (email, password, username, profilePicture, _isAdmin = false, adminPasscode = '') => {
     try {
       // Validate admin credentials if attempting admin signup
       if (username.toLowerCase() === 'admin') {

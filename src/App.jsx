@@ -9,6 +9,7 @@ import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import Chat from './pages/Chat'
 import Profile from './pages/Profile'
+import DirectMessage from './pages/DirectMessage'
 import './App.css'
 
 const ProtectedRoute = ({ children }) => {
@@ -32,6 +33,14 @@ function AppRoutes() {
             <ChatProvider>
               <Chat />
             </ChatProvider>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/dm/:userId"
+        element={
+          <ProtectedRoute>
+            <DirectMessage />
           </ProtectedRoute>
         }
       />

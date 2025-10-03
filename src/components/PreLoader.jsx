@@ -1,22 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import './PreLoader.css'
 
 const PreLoader = ({ onLoadComplete }) => {
-  const [particles, setParticles] = useState([])
-
   useEffect(() => {
-    // Generate random particles
-    const newParticles = Array.from({ length: 30 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      delay: Math.random() * 2,
-      duration: 2 + Math.random() * 2,
-    }))
-    setParticles(newParticles)
-
-    // Complete after 3 seconds
     const timer = setTimeout(() => {
       onLoadComplete()
     }, 3000)
@@ -24,120 +11,127 @@ const PreLoader = ({ onLoadComplete }) => {
     return () => clearTimeout(timer)
   }, [onLoadComplete])
 
-  return (
-    <motion.div
-      className="preloader"
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      {/* Particle effects */}
-      {particles.map((particle) => (
-        <motion.div
-          key={particle.id}
-          className="particle"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{
-            opacity: [0, 1, 0],
-            scale: [0, 1, 0],
-            x: [particle.x + '%', (particle.x + 20) % 100 + '%'],
-            y: [particle.y + '%', (particle.y - 30) % 100 + '%'],
-          }}
-          transition={{
-            duration: particle.duration,
-            delay: particle.delay,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-      ))}
+  // Chat bubbles with varied sizes and positions
+  const chatBubbles = [
+    { id: 1, x: 15, y: 20, size: 'small', delay: 0, sent: true },
+    { id: 2, x: 75, y: 25, size: 'medium', delay: 0.2, sent: false },
+    { id: 3, x: 20, y: 55, size: 'medium', delay: 0.4, sent: true },
+    { id: 4, x: 70, y: 60, size: 'small', delay: 0.6, sent: false },
+    { id: 5, x: 25, y: 80, size: 'small', delay: 0.8, sent: true },
+    { id: 6, x: 80, y: 85, size: 'medium', delay: 1, sent: false },
+  ]
 
-      {/* Logo with pulsating animation */}
+  return (
+    <div className="preloader">
+      {/* Animated background gradient */}
+      <div className="preloader-background">
+        <div className="gradient-orb gradient-orb-1"></div>
+        <div className="gradient-orb gradient-orb-2"></div>
+        <div className="gradient-orb gradient-orb-3"></div>
+      </div>
+
+      {/* Floating chat bubbles */}
+      <div className="chat-bubbles-container">
+        {chatBubbles.map((bubble) => (
+          <motion.div
+            key={bubble.id}
+            className={`chat-bubble chat-bubble-${bubble.size} ${bubble.sent ? 'bubble-sent' : 'bubble-received'}`}
+            style={{
+              left: `${bubble.x}%`,
+              top: `${bubble.y}%`,
+            }}
+            initial={{ opacity: 0, scale: 0, y: 50 }}
+            animate={{ 
+              opacity: [0, 1, 1, 0],
+              scale: [0, 1, 1, 0.8],
+              y: [50, 0, 0, -20]
+            }}
+            transition={{
+              duration: 3,
+              delay: bubble.delay,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <div className="bubble-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Main content */}
       <motion.div
-        className="logo-container"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{
-          scale: [0.8, 1.1, 1],
-          opacity: 1,
-        }}
-        transition={{
-          duration: 1,
-          ease: 'easeOut',
-        }}
+        className="preloader-content"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
       >
+        {/* Logo with liquid glass effect */}
         <motion.div
-          className="logo-circle"
+          className="logo-container glass-effect"
           animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
+            boxShadow: [
+              '0 8px 32px rgba(4, 120, 87, 0.3)',
+              '0 12px 48px rgba(4, 120, 87, 0.5)',
+              '0 8px 32px rgba(4, 120, 87, 0.3)',
+            ],
           }}
           transition={{
-            duration: 3,
+            duration: 2,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: "easeInOut"
           }}
         >
-          <motion.svg
-            width="120"
-            height="120"
-            viewBox="0 0 120 120"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+          <motion.div
+            className="logo-icon"
+            animate={{
+              scale: [1, 1.05, 1],
+              rotate: [0, 5, -5, 0],
+            }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
           >
-            {/* Abstract Gabstep Logo */}
-            <motion.path
-              d="M60 20 L100 40 L100 80 L60 100 L20 80 L20 40 Z"
-              stroke="rgba(255, 255, 255, 0.9)"
-              strokeWidth="3"
-              fill="rgba(16, 185, 129, 0.3)"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 2, ease: 'easeInOut', repeat: Infinity }}
-            />
-            <motion.circle
-              cx="60"
-              cy="60"
-              r="25"
-              stroke="rgba(255, 255, 255, 0.9)"
-              strokeWidth="3"
-              fill="rgba(16, 185, 129, 0.5)"
-              initial={{ scale: 0 }}
-              animate={{ scale: [0, 1.2, 1] }}
-              transition={{ duration: 1.5, ease: 'easeOut' }}
-            />
-            <motion.text
-              x="60"
-              y="68"
-              textAnchor="middle"
-              fill="white"
-              fontSize="24"
-              fontWeight="bold"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-            >
-              G
-            </motion.text>
-          </motion.svg>
+            💬
+          </motion.div>
+          <h1 className="app-name">Gabstep</h1>
+          <p className="app-subtitle">Business Chat</p>
         </motion.div>
-        <motion.h1
-          className="logo-text"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-        >
-          Gabstep
-        </motion.h1>
-        <motion.p
-          className="logo-subtitle"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.8 }}
-        >
-          Business Chat
-        </motion.p>
+
+        {/* Loading spinner */}
+        <div className="loading-container">
+          <motion.div
+            className="loading-spinner"
+            animate={{ rotate: 360 }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          >
+            <div className="spinner-ring"></div>
+            <div className="spinner-ring"></div>
+            <div className="spinner-ring"></div>
+          </motion.div>
+          <p className="loading-text">Connecting to your team...</p>
+        </div>
+
+        {/* Progress bar */}
+        <div className="progress-bar-container">
+          <motion.div
+            className="progress-bar"
+            initial={{ width: 0 }}
+            animate={{ width: '100%' }}
+            transition={{ duration: 3, ease: 'easeOut' }}
+          />
+        </div>
       </motion.div>
-    </motion.div>
+    </div>
   )
 }
 

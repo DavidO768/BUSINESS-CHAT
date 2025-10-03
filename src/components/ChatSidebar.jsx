@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import { useChat } from '../context/ChatContext'
 import { X, MessageCircle, UserX, Volume2, VolumeX } from 'lucide-react'
@@ -9,17 +10,17 @@ const ChatSidebar = ({ isOpen, onClose }) => {
   const { user } = useAuth()
   const { users, muteUser, blockUser, isChatMuted, toggleChatMute } = useChat()
   const [selectedUser, setSelectedUser] = useState(null)
+  const navigate = useNavigate()
 
   const handleUserAction = async (targetUser, action) => {
-    if (!user?.is_admin) return
-
-    if (action === 'mute') {
+    if (action === 'mute' && user?.is_admin) {
       await muteUser(targetUser.id, !targetUser.is_muted)
-    } else if (action === 'block') {
+    } else if (action === 'block' && user?.is_admin) {
       await blockUser(targetUser.id, true)
     } else if (action === 'dm') {
-      // Direct message logic would go here
-      alert(`Direct message to ${targetUser.username}`)
+      // Navigate to direct message page
+      navigate(`/dm/${targetUser.id}`)
+      onClose()
     }
     setSelectedUser(null)
   }
@@ -32,20 +33,11 @@ const ChatSidebar = ({ isOpen, onClose }) => {
     <AnimatePresence>
       {isOpen && (
         <>
-          <motion.div
+          <div
             className="sidebar-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             onClick={onClose}
           />
-          <motion.div
-            className="chat-sidebar glass-effect"
-            initial={{ x: '-100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '-100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
-          >
+          <div className="chat-sidebar glass-effect">
             <div className="sidebar-header">
               <h2>Active Users</h2>
               <button className="close-button" onClick={onClose}>
@@ -70,7 +62,12 @@ const ChatSidebar = ({ isOpen, onClose }) => {
                 <div key={u.id} className="user-item">
                   <button
                     className="user-button"
-                    onClick={() => user?.is_admin && setSelectedUser(u)}
+                    onClick={() => {
+                      // Allow click if: user is admin OR clicking on admin
+                      if (user?.is_admin || u.is_admin) {
+                        setSelectedUser(u)
+                      }
+                    }}
                   >
                     {u.profile_picture ? (
                       <img src={u.profile_picture} alt={u.username} />
@@ -85,50 +82,51 @@ const ChatSidebar = ({ isOpen, onClose }) => {
                   </button>
 
                   <AnimatePresence>
-                    {selectedUser?.id === u.id && user?.is_admin && (
+                    {selectedUser?.id === u.id && (
                       <>
-                        <motion.div
+                        <div
                           className="action-overlay"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
                           onClick={() => setSelectedUser(null)}
                         />
-                        <motion.div
-                          className="action-menu glass-effect"
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.9 }}
-                        >
-                          <button
-                            className="action-item"
-                            onClick={() => handleUserAction(u, 'mute')}
-                          >
-                            <VolumeX size={16} />
-                            {u.is_muted ? 'Unmute' : 'Mute'}
-                          </button>
-                          <button
-                            className="action-item danger"
-                            onClick={() => handleUserAction(u, 'block')}
-                          >
-                            <UserX size={16} />
-                            Block
-                          </button>
-                          <button
-                            className="action-item"
-                            onClick={() => handleUserAction(u, 'dm')}
-                          >
-                            <MessageCircle size={16} />
-                            Send DM
-                          </button>
-                        </motion.div>
+                        <div className="action-menu glass-effect">
+                          {/* Show Send DM button for everyone when applicable */}
+                          {(user?.is_admin || u.is_admin) && (
+                            <button
+                              className="action-item"
+                              onClick={() => handleUserAction(u, 'dm')}
+                            >
+                              <MessageCircle size={16} />
+                              Send DM
+                            </button>
+                          )}
+                          
+                          {/* Admin-only actions */}
+                          {user?.is_admin && (
+                            <>
+                              <button
+                                className="action-item"
+                                onClick={() => handleUserAction(u, 'mute')}
+                              >
+                                <VolumeX size={16} />
+                                {u.is_muted ? 'Unmute' : 'Mute'}
+                              </button>
+                              <button
+                                className="action-item danger"
+                                onClick={() => handleUserAction(u, 'block')}
+                              >
+                                <UserX size={16} />
+                                Block
+                              </button>
+                            </>
+                          )}
+                        </div>
                       </>
                     )}
                   </AnimatePresence>
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion'
+import { motion, AnimatePresence, useMotionValue } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import { useChat } from '../context/ChatContext'
 import { Edit2, Trash2, Reply, FileText } from 'lucide-react'
